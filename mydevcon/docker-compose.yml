@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  weba:
+    build: ../services/myapp
+    expose:
+      - 80
+    networks:
+      - testnet
+
+  webb:
+    build: ../services/myapp
+    expose:
+      - 80
+    networks:
+      - testnet
+
+  webc:
+    build: ../services/myapp
+    expose:
+      - 80
+    networks:
+      - testnet
+
+  haproxy:
+    image: hypriot/rpi-haproxy
+    volumes:
+      - ../services/haproxy:/haproxy-override
+    ports:
+      - "8012:80"
+      - "7012:70"
+    expose:
+      - "8012"
+      - "7012"
+    networks:
+      - testnet
+networks:
+  testnet:
+    driver: bridge
